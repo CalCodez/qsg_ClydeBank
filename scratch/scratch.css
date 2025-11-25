@@ -21,7 +21,9 @@ header {
 	padding: 20px;
 	text-align: center;
 	color: #ffffff;
-	position: relative;
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 80px;
 }
 
 .temp-toggle {
@@ -29,7 +31,6 @@ header {
 	width: fit-content;
 	border: 2px outset #000000;
 	padding: 8px;
-	position: absolute;
 	right: 30px;
 	top: 30px;
 	background-color: rgba(0, 0, 0, 0.2);
@@ -38,37 +39,18 @@ header {
 	color: #ffffff;
 }
 
-.logo-container {
-	display: inline-block;
-}
-
-.logo {
-	height: 50px;
-	margin-right: 20px;
-}
-
 section {
 	padding: 40px 20px;
-	text-align: center;
+	/* text-align: center; */
+	outline: 3px outset #000000;
+	margin-bottom: 80px;
 }
 
-.welcome {
-	background-color: #c08552;
-	color: #ffffff;
-}
-
-.shop .coffee-list {
-	list-style: none;
-}
-
-.about-us {
-	background-color: #c08552;
-	color: #ffffff;
-}
-
-footer {
-	background-color: #3b1c0b;
-	padding: 20px;
-	text-align: center;
-	color: #ffffff;
+#colorSquare {
+	width: 20em;
+	height: 5em;
+	background-color: red;
+	border: 0.1em solid gray;
+	border-radius: 0.75em;
+	margin-top: 1em;
 }

@@ -1,0 +1,14 @@
+const firstNameTextBox = document.getElementById('firstName');
+const submitButton = document.getElementById('submit');
+const greetingContainer = document.getElementById('greeting');
+
+submitButton.addEventListener('click', () => {
+	greetingContainer.textContent = `Hello, ${firstNameTextBox.value}!`;
+});
+
+const colorSelector = document.getElementById('colorSelector');
+const colorSquare = document.getElementById('colorSquare');
+
+colorSelector = addEventListener('change', () => {
+	colorSquare.style.backgroundColor = colorSelector.value;
+});
