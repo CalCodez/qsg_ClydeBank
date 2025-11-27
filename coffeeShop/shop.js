@@ -62,3 +62,5 @@ let menu = {
 };
 
 menu.populate(menuList);
+
+//`` used dom manipulation to populate menu from inventory object
