@@ -73,3 +73,12 @@ section {
 	transform: scale(1.1);
 	transition: all ease 0.5s;
 }
+
+#colorSwatch {
+	width: 20em;
+	height: 5em;
+	background-color: red;
+	border: 0.1em solid gray;
+	border-radius: 0.75em;
+	margin-top: 1em;
+}
