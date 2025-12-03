@@ -44,6 +44,9 @@ section {
 	/* text-align: center; */
 	outline: 3px outset #000000;
 	margin-bottom: 80px;
+	justify-content: center;
+	align-items: center;
+	display: flex;
 }
 
 #colorSquare {
@@ -53,4 +56,20 @@ section {
 	border: 0.1em solid gray;
 	border-radius: 0.75em;
 	margin-top: 1em;
+}
+
+#theButton {
+	height: 70px;
+	width: 280px;
+	border-radius: 20px;
+	font-size: 1.2rem;
+	font-weight: 600;
+	border: 3px outset #000000;
+	padding: 8px;
+	cursor: pointer;
+}
+
+#theButton:hover {
+	transform: scale(1.1);
+	transition: all ease 0.5s;
 }
