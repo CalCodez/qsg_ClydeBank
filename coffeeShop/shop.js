@@ -1,66 +1,76 @@
-//Inventory
+const hamburgerMenu = {
+	render: (parent, id = 'hamburger', width = 40, height = 40) => {
+		let svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+		let rect1 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+		let rect2 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+		let rect3 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
 
-let menuList = document.getElementById('coffee-menu');
+		svg.id = id;
+		svg.classList.add('hamburger');
+		svg.setAttribute('width', width);
+		svg.setAttribute('height', height);
+		svg.setAttribute('viewBox', '0 0 100 80');
+		svg.setAttribute('fill', '#cad317');
 
-//++Populate Menu Variation 1
-// function populateMenu(container) {
-// 	let inventory = ['Regular Coffee', 'Espresso', 'Cappuccino', 'Latte'];
-// 	let inventoryPrices = [3.0, 3.5, 4.0, 4.25];
+		rect1.setAttribute('width', 100);
+		rect1.setAttribute('height', '20');
 
-// 	for (let i = 0; i < inventory.length; i++) {
-// 		container.innerHTML += '<li>' + inventory[i] + ' - $' + inventoryPrices[i].toFixed(2) + '</li>';
-// 	}
-// }
-// populateMenu(menuList);
+		rect2.setAttribute('y', '30');
+		rect2.setAttribute('width', '100');
+		rect2.setAttribute('height', ' 20');
 
-//``Used a for loop to iterate over the inventory and inventoryPrices
+		rect2.setAttribute('y', '60');
+		rect2.setAttribute('width', '100');
+		rect2.setAttribute('height', ' 20');
 
-//++Populate Menu Variation 2
+		svg.appendChild(rect1);
+		svg.appendChild(rect2);
+		svg.appendChild(rect3);
 
-// let menu = {
-// 	inventory: {
-// 		'Regular Coffee': 3.0,
-// 		Espresso: 3.5,
-// 		Cappuccino: 4.0,
-// 		Latte: 4.25,
-// 	},
-
-// 	populate: function (container) {
-// 		for (let item in this.inventory) {
-// 			let price = this.inventory[item];
-
-// 			container.innerHTML += '<li>' + item + '  - $' + price.toFixed(2) + '</li>';
-// 		}
-// 	},
-// };
-
-// menu.populate(menuList);
-
-//``Converted inventory and inventory prices into a JSON like object
-
-//++Populate menu variation 3
-
-let menu = {
-	inventory: {
-		'regular Coffee': 4.0,
-		Espresso: 4.5,
-		Cappuccino: 4.75,
-		Latte: 5.0,
-	},
-
-	populate: function (container) {
-		for (let item in this.inventory) {
-			let price = this.inventory[item].toFixed(2);
-
-			let li = document.createElement('li');
-
-			li.textContent = `${item} -  ${price}`;
-
-			container.appendChild(li);
-		}
+		parent.appendChild(svg);
 	},
 };
 
-menu.populate(menuList);
+const listPrototype = {
+	render: (values, parent, id, separator = ' -$', className = '') => {
+		let ul = document.createElement('ul');
 
-//`` used dom manipulation to populate menu from inventory object
+		if (id) {
+			ul.id = id;
+		}
+
+		if (className) {
+			ul.className = className;
+		}
+
+		for (let key in values) {
+			let k = key;
+			let v = values[key];
+
+			let li = document.createElement('li');
+			// li.textContent = key + separator + values.toFixed(2);
+			li.textContent = k + separator + v.toFixed(2);
+
+			ul.appendChild(li);
+		}
+		parent.appendChild(ul);
+	},
+};
+let inventory = {
+	'Regular Coffee': 3.0,
+	Espresso: 3.5,
+	Cappuccino: 4.0,
+	Latte: 4.25,
+};
+
+document.addEventListener('DOMContentLoaded', (e) => {
+	const header = document.getElementsByTagName('header')[0];
+
+	let menuList = document.getElementById('coffee-menu-container');
+
+	let menu = Object.create(listPrototype);
+
+	menu.render(inventory, menuList, 'coffee-menu', ' -$', 'coffee-list');
+
+	hamburgerMenu.render(header);
+});

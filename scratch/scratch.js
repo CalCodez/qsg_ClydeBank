@@ -8,12 +8,12 @@ submitButton.addEventListener('click', () => {
 });
 
 //++Switch File Example
-const colorSelector = document.getElementById('colorSelector');
-const colorSquare = document.getElementById('colorSquare');
+// const colorSelector = document.getElementById('colorSelector');
+// const colorSquare = document.getElementById('colorSquare');
 
-colorSelector.addEventListener('change', () => {
-	colorSquare.style.backgroundColor = colorSelector.value;
-});
+// colorSelector.addEventListener('change', () => {
+// 	colorSquare.style.backgroundColor = colorSelector.value;
+// });
 
 //++Clicked File Example
 let theButton = document.getElementById('theButton');
@@ -70,7 +70,6 @@ const colorSelector2 = {
 			option.value = colorSelector2.colors[color];
 			option.innerHTML = capFirstLetter(color);
 			select.appendChild(option);
-			console.log(option);
 		}
 		select.addEventListener('change', (e) => {
 			changeBgColor(swatch, e.target.value);
