@@ -82,3 +82,11 @@ section {
 	border-radius: 0.75em;
 	margin-top: 1em;
 }
+
+.switch2Select {
+	width: 100%;
+	height: 30px;
+	border-radius: 8px;
+	font-weight: 600;
+	font-size: 18px;
+}

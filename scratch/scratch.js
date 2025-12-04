@@ -31,6 +31,16 @@ theButton.addEventListener(
 );
 
 //++Switch File Example 2
+
+//Utility Functions
+function capFirstLetter(str) {
+	return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function changeBgColor(element, color) {
+	element.style.backgroundColor = color;
+}
+
 const colorSelector2 = {
 	colors: {
 		red: '#ff0000',
@@ -58,11 +68,12 @@ const colorSelector2 = {
 		for (let color in colorSelector2.colors) {
 			let option = document.createElement('option');
 			option.value = colorSelector2.colors[color];
-			option.innerHTML = color.charAt(0).toUpperCase() + color.slice(1);
+			option.innerHTML = capFirstLetter(color);
 			select.appendChild(option);
+			console.log(option);
 		}
 		select.addEventListener('change', (e) => {
-			swatch.style.backgroundColor = e.target.value;
+			changeBgColor(swatch, e.target.value);
 		});
 		parent.appendChild(select);
 	},
@@ -70,4 +81,4 @@ const colorSelector2 = {
 
 let colorSwatch = document.getElementById('colorSwatch');
 let colorSelection = document.getElementById('colorSelection');
-colorSelector2.render(colorSelection, colorSwatch);
+colorSelector2.render(colorSelection, colorSwatch, 'switch2Select', 'switch2Select');
