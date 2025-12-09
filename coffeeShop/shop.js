@@ -101,6 +101,7 @@ const mainMenu = {
 const listPrototype = {
 	render: (values, parent, id, separator = ' -$', className = '') => {
 		let ul = document.createElement('ul');
+		console.log('🚀 ~ ul:', ul);
 
 		ul.id = id;
 
@@ -134,6 +135,7 @@ let inventory = {
 	Cappuccino: 4.0,
 	Latte: 4.25,
 };
+console.log('🚀 ~ inventory:', inventory);
 
 document.addEventListener('DOMContentLoaded', () => {
 	const header = document.getElementsByTagName('header')[0];
@@ -148,5 +150,3 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	hamburgerMenu.render(header);
 });
-
-console.log(document.cookie);
