@@ -101,7 +101,6 @@ const mainMenu = {
 const listPrototype = {
 	render: (values, parent, id, separator = ' -$', className = '') => {
 		let ul = document.createElement('ul');
-		console.log('🚀 ~ ul:', ul);
 
 		ul.id = id;
 
@@ -135,7 +134,6 @@ let inventory = {
 	Cappuccino: 4.0,
 	Latte: 4.25,
 };
-console.log('🚀 ~ inventory:', inventory);
 
 document.addEventListener('DOMContentLoaded', () => {
 	const header = document.getElementsByTagName('header')[0];
@@ -150,3 +148,52 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	hamburgerMenu.render(header);
 });
+
+document.cookie = 'firstName=Cortez';
+
+function getCookie(name) {
+	let cookieName = name + '=';
+
+	let decodedCookie = decodeURIComponent(document.cookie);
+	if (!decodedCookie) {
+		return null;
+	}
+
+	let cookieArray = decodedCookie.split(',');
+
+	for (let i = 0; i < cookieArray.length; i++) {
+		let cookie = cookieArray[i];
+
+		//RegExpression (blah)
+		// cookie = cookie.replace(/^\s+/, '');
+		cookie = cookie.trim();
+
+		if (cookie.indexOf(cookieName) === 0) {
+			return cookie.substring(cookieName.length, cookie.length);
+		}
+	}
+	return null;
+}
+
+let firstName = getCookie('firstName');
+
+function createCookieExpiration(hours) {
+	//Create new Date object
+	let expirationDate = new Date();
+
+	// Add the correct number if milliseconds to the existing time.
+	expirationDate.setTime(expirationDate.getTime() + hours * 60 * 60 * 1000);
+
+	//Return the time in a format expected by the browser
+
+	return expirationDate.toUTCString();
+}
+
+let expTime = createCookieExpiration(168);
+document.cookie = 'firstName=Cortez; expires=' + expTime;
+
+function removeCookie(cookieName) {
+	document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+}
+
+removeCookie(firstName);

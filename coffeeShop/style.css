@@ -80,6 +80,10 @@ section {
 	color: #ffffff;
 }
 
+.add-to-cart-button {
+	margin-left: 1em;
+}
+
 footer {
 	background-color: #3b1c0b;
 	padding: 20px;
