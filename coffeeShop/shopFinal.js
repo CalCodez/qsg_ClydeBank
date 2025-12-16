@@ -23,7 +23,7 @@ const inventory = {
 /*Random number to add to the end of IDs tht aren't
 specified to prevent collisions. Only one per page load is needed
 */
-const randomIdPostfix = Math.floor(Math.random() * 1000);
+const randomIdPostFix = Math.floor(Math.random() * 100000);
 
 //This object is used here to format currency
 const intlFormat = new Intl.NumberFormat(locale, {
@@ -40,7 +40,7 @@ function getCookie(name) {
 	let decodedCookie = decodeURIComponent(document.cookie);
 
 	//Check if there are any cookies to process
-	if (decodedCookie) {
+	if (!decodedCookie) {
 		return null;
 	}
 	//Split document.cookie on on semicolons into an array
@@ -51,7 +51,8 @@ function getCookie(name) {
 		let cookie = cookieArray[i];
 
 		//Remove any leading spaces
-		cookie = cookie.trim();
+		cookie = cookie.replace(/^\s+/, '');
+		// cookie = cookie.trim();
 
 		//If cookie is found, return its value
 		if (cookie.indexOf(cookieName) === 0) {
@@ -95,7 +96,10 @@ function saveCart(cart) {
 function addToCart(itemName, itemPrice, itemQuantity) {
 	//Load the existing cart from the cookie (if it exists) otherwise loads empty
 	let cart = {};
-	cart = JSON.parse(document.cookie.replace('cart=", "'));
+
+	if (document.cookie) {
+		cart = JSON.parse(document.cookie.replace('cart=', ''));
+	}
 	//This strips 'cart=stringifiedJSON' into 'stringifiedJSON' then parses that and assigns it to the cart object
 
 	//Crate an object with the name, price, and quantity to add
@@ -113,7 +117,7 @@ function addToCart(itemName, itemPrice, itemQuantity) {
 	}
 
 	//Log to console for diagnostic purposes
-	console.log(`Added` + JSON.stringify(item) + `to cart!`);
+	console.log(`Added` + JSON.stringify(item) + ` to cart!`);
 
 	//Sae the cart back to the cookie
 	saveCart(cart);
@@ -138,7 +142,7 @@ function removeFromCart(itemName) {
 
 //Define a button prototype
 const buttonPrototype = {
-	id: 'button' + randomIdPostfix,
+	id: 'button' + randomIdPostFix,
 	text: 'Click Me',
 	color: '#cad317',
 	borderStyle: '1px solid #3b1c0b',
@@ -166,7 +170,7 @@ const buttonPrototype = {
 //Define hamburger menu prototype
 
 const hamburgerMenuPrototype = {
-	id: 'hamburger + randomIdPostFix',
+	id: 'hamburger' + randomIdPostFix,
 	mainMenu: 'mainMenu',
 	width: 40,
 	height: 40,
@@ -214,7 +218,7 @@ const hamburgerMenuPrototype = {
 //Define A Menu
 const mainMenuPrototype = {
 	links: {},
-	id: 'mainMenu' + randomIdPostfix,
+	id: 'mainMenu' + randomIdPostFix,
 	hamburgerId: 'hamburger',
 	mindWidth: '300px',
 	maxWidth: '800px',
@@ -269,7 +273,7 @@ const mainMenuPrototype = {
 //The list prototype
 const listPrototype = {
 	values: {},
-	id: 'list' + randomIdPostfix,
+	id: 'list' + randomIdPostFix,
 	separator: ' - ',
 	classNAme: '',
 	formatCurrency: true,
@@ -373,12 +377,12 @@ document.addEventListener('DOMContentLoaded', () => {
 		const itemId = 'item-' + replaceNonAlphanumericWithDashes(item);
 		const li = document.getElementById(itemId);
 		button.render(li);
-		console.log(button);
 	}
 
 	let mainMenu = Object.create(mainMenuPrototype);
 	mainMenu.id = 'mainMenu';
 	mainMenu.links = menuLinks;
+
 	mainMenu.render(body);
 
 	let hamburgerMenu = Object.create(hamburgerMenuPrototype);
