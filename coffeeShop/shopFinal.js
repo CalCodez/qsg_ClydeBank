@@ -36,7 +36,7 @@ function getCookie(name) {
 	//Add the equal sign to the name (name=)
 	let cookieName = name + '=';
 
-	//Decide cookie string to handle cookies with special characters
+	//Decode cookie string to handle cookies with special characters
 	let decodedCookie = decodeURIComponent(document.cookie);
 
 	//Check if there are any cookies to process
@@ -98,7 +98,11 @@ function addToCart(itemName, itemPrice, itemQuantity) {
 	let cart = {};
 
 	if (document.cookie) {
-		cart = JSON.parse(document.cookie.replace('cart=', ''));
+		const cookieString = document.cookie.split('; ').find((row) => row.startsWith('cart='));
+
+		if (cookieString) {
+			const encodeCart = cookieString.replace('cart=', '');
+		}
 	}
 	//This strips 'cart=stringifiedJSON' into 'stringifiedJSON' then parses that and assigns it to the cart object
 
@@ -171,7 +175,7 @@ const buttonPrototype = {
 
 const hamburgerMenuPrototype = {
 	id: 'hamburger' + randomIdPostFix,
-	mainMenu: 'mainMenu',
+	mainMenuId: 'mainMenu',
 	width: 40,
 	height: 40,
 	color: '#cad317',
@@ -180,10 +184,10 @@ const hamburgerMenuPrototype = {
 		let { id, mainMenuId, width, height, color } = this;
 
 		const svgUrl = 'http://www.w3.org/2000/svg';
-		let svg = document.createElementsNS(svgUrl, 'svg');
-		let rect1 = document.createElementsNS(svgUrl, 'rect');
-		let rect2 = document.createElementsNS(svgUrl, 'rect');
-		let rect3 = document.createElementsNS(svgUrl, 'rect');
+		let svg = document.createElementNS(svgUrl, 'svg');
+		let rect1 = document.createElementNS(svgUrl, 'rect');
+		let rect2 = document.createElementNS(svgUrl, 'rect');
+		let rect3 = document.createElementNS(svgUrl, 'rect');
 
 		//Set Svg Attributes
 
@@ -204,6 +208,10 @@ const hamburgerMenuPrototype = {
 		rect3.setAttribute('y', '60');
 		rect3.setAttribute('width', '100');
 		rect3.setAttribute('height', '20');
+
+		svg.appendChild(rect1);
+		svg.appendChild(rect2);
+		svg.appendChild(rect3);
 
 		let menu = document.getElementById(mainMenuId);
 
@@ -252,6 +260,9 @@ const mainMenuPrototype = {
 			let a = document.createElement('a');
 
 			a.style.color = linkColor;
+
+			li.style.listStyle = 'none';
+
 			a.href = links[link];
 			a.innerHTML = link;
 
@@ -275,7 +286,7 @@ const listPrototype = {
 	values: {},
 	id: 'list' + randomIdPostFix,
 	separator: ' - ',
-	classNAme: '',
+	className: '',
 	formatCurrency: true,
 
 	render: function (parent) {
@@ -295,7 +306,7 @@ const listPrototype = {
 			let k = key;
 			let v = values[key];
 			let li = document.createElement('li');
-			li.id = 'item' + replaceNonAlphanumericWithDashes(k);
+			li.id = 'item-' + replaceNonAlphanumericWithDashes(k);
 
 			if (formatCurrency) {
 				li.textContent = k + separator + intlFormat.format(v);
@@ -313,7 +324,7 @@ const listPrototype = {
 const cartViewPrototype = {
 	backgroundColor: '#f4f1de',
 	borderStyle: '1px solid #3b1c0b',
-	carTitle: 'Your Cart',
+	cartTitle: 'Your Cart',
 
 	cartContents: {},
 
@@ -331,16 +342,17 @@ const cartViewPrototype = {
 		div.style.minWidth = '300px';
 		div.style.maxWidth = '600px;';
 
-		let h2 = document.createElement('h2');
+		let h2 = document.createElement('h1');
 		h2.textContent = cartTitle;
 		div.appendChild(h2);
 
 		let ul = document.createElement('ul');
 
 		for (let item in cartContents) {
-			let price = cartContents[item];
+			// let price = cartContents[item];
 
-			let li = document.createElement('li');
+			let k = item;
+			let v = cartContents[item];
 
 			li.textContent = k + separator + v;
 
@@ -388,4 +400,12 @@ document.addEventListener('DOMContentLoaded', () => {
 	let hamburgerMenu = Object.create(hamburgerMenuPrototype);
 	hamburgerMenu.id = 'hamburger';
 	hamburgerMenu.render(header);
+
+	let cartButton = Object.create(buttonPrototype);
+	cartButton.text = 'Your Cart';
+	cartButton.clickEvent = () => {
+		let cartView = Object.create(cartViewPrototype);
+		cartView.render();
+	};
+	cartButton.render(header);
 });
